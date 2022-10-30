@@ -6,13 +6,21 @@ set(CMAKE_CXX_STANDARD 20)
 set(PUBLIC_HEADERS
     include/BasicLevelGenerator.hpp
     include/LevelData.hpp
-    include/LaneGenerator.hpp)
+    include/LevelGenerator.hpp
+)
+
+set(IMPLEMENTATION_HEADERS
+    src/BasicLevelGeneratorImpl.hpp
+)
 
 set(IMPLEMENTATION_SOURCES
-    src/LaneData.cpp)
+    src/BasicLevelGenerator.cpp
+    src/BasicLevelGeneratorImpl.cpp
+)
 
 add_library(${PROJECT_NAME} STATIC
     ${PUBLIC_HEADERS}
+    ${IMPLEMENTATION_HEADERS}
     ${IMPLEMENTATION_SOURCES}
 )
 

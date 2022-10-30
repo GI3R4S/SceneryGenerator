@@ -1,7 +1,10 @@
 #include <iostream>
 
-#include <LevelData.hpp> 
+#include "BasicLevelGenerator.hpp"
+#include "LevelData.hpp" 
 
 int main() {
-    SceneryGenerator::LevelData level_data;
+    SceneryGenerator::BasicLevelGenerator::Configuration configuration;
+
+    SceneryGenerator::BasicLevelGenerator basic_level_generator(configuration);
 }
