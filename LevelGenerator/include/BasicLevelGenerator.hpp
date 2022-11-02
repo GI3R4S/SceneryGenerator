@@ -17,13 +17,8 @@ class BasicLevelGenerator : public LevelGenerator {
   //! BasicLevelGenerator. Current assumption is that all object has base at
   //! same 'y' value.
   struct Configuration {
-    //! Minimal vertex for generated level. It is required for both
-    //! minimal_vertex and maximal_vertex to have same 'y' value.
-    std::int32_t minimal_vertex;
-
-    //! Maximal vertex for generated level. It is required for both
-    //! minimal_vertex and maximal_vertex to have same 'y' value.
-    std::int32_t maximal_vertex;
+    //! Approximate number of objects to be generated.
+    std::int32_t number_of_objects;
 
     //! Type of scenery to be generated.
     SceneryType scenery_type;

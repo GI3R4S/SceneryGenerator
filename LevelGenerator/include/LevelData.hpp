@@ -15,7 +15,17 @@ enum class SceneryType {
 };
 
 //! Type of object.
-enum class ObjectType { kBuilding, kRoad, kRiver, kPath, kPavement };
+enum class ObjectType {
+  kBuilding,
+  kRoad,
+  kRiver,
+  kPath,
+  kPavement,
+  kField,
+  kTerrain,
+  kFence,
+  kMeadow
+};
 
 //! Representation of vertex.
 struct Vertex {

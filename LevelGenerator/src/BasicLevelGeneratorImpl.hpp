@@ -13,4 +13,5 @@ class BasicLevelGenerator::Impl {
  private:
   Configuration configuration_;
 };
+
 };  // namespace SceneryGenerator
