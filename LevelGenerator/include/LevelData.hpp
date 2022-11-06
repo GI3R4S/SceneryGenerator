@@ -11,7 +11,8 @@ enum class SceneryType {
   kCityCenter,
   kCityOutskirts,
   kIndustialArea,
-  kCountryside
+  kSettlement,
+  kVillage
 };
 
 //! Type of object.
