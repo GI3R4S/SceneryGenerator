@@ -17,8 +17,9 @@ class BasicLevelGenerator : public LevelGenerator {
   //! BasicLevelGenerator. Current assumption is that all object has base at
   //! same 'y' value.
   struct Configuration {
-    //! Approximate number of objects to be generated.
-    std::int32_t number_of_objects;
+    //! Size of map expressed in square meters.
+    //! Recommended minimal size of map is 10 000 square meters.
+    double size_of_map;
 
     //! Type of scenery to be generated.
     SceneryType scenery_type;
