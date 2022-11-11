@@ -1,6 +1,6 @@
 #include "BasicLevelGenerator.hpp"
 
-namespace SceneryGenerator {
+namespace SceneryGenerator::LevelGenerator {
 
 class BasicLevelGenerator::Impl {
  public:
@@ -35,4 +35,4 @@ class BasicLevelGenerator::Impl {
   Configuration configuration_;
 };
 
-};  // namespace SceneryGenerator
+};  // namespace SceneryGenerator::LevelGenerator

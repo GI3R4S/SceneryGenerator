@@ -5,3 +5,4 @@ project(SceneryGenerator CXX)
 
 add_subdirectory(LevelGenerator)
 add_subdirectory(LevelVisualisation)
+add_subdirectory(Utils)

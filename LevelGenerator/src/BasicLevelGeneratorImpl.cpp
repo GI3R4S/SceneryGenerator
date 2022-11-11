@@ -6,7 +6,7 @@
 #include <random>
 #include <set>
 
-namespace SceneryGenerator {
+namespace SceneryGenerator::LevelGenerator {
 
 namespace {
 // const std::map<SceneryType, std::set<ObjectType>>
@@ -30,34 +30,6 @@ const std::map<SceneryType, std::pair<float, float>> kRoadCoverageMap{
     {SceneryType::kIndustialArea, {0.1f, 0.2f}}};
 
 }  // namespace
-
-class RandomIntegerGenerator {
- public:
-  RandomIntegerGenerator(std::pair<int64_t, int64_t> range)
-      : min_(std::min(range.first, range.second)),
-        max_(std::max(range.first, range.second)),
-        random_device_(),
-        random_engine_(random_device_()),
-        distribution_(min_, max_) {}
-
-  int64_t GetInteger() { return distribution_(random_engine_); }
-
-  std::vector<int64_t> GetIntegers(int number_of_integers) {
-    std::vector<int64_t> integers;
-    while (number_of_integers--) {
-      integers.push_back(distribution_(random_engine_));
-    };
-
-    return integers;
-  }
-
- private:
-  int64_t min_;
-  int64_t max_;
-  std::random_device random_device_;
-  std::mt19937 random_engine_;
-  std::uniform_int_distribution<int64_t> distribution_;
-};
 
 BasicLevelGenerator::Impl::Impl(Configuration configuration)
     : configuration_(std::move(configuration)) {}
@@ -131,4 +103,4 @@ void BasicLevelGenerator::Impl::AddRoadNetwork(LevelData& level_data,
   }
 }
 
-}  // namespace SceneryGenerator
+}  // namespace SceneryGenerator::LevelGenerator

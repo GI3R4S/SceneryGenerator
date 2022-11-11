@@ -5,7 +5,7 @@
 
 #include "LevelData.hpp"
 
-namespace SceneryGenerator {
+namespace SceneryGenerator::LevelGenerator {
 
 //! Interface for level generator.
 class LevelGenerator {
@@ -13,6 +13,6 @@ class LevelGenerator {
   virtual LevelData GenerateLevel() = 0;
 };
 
-}  // namespace SceneryGenerator
+}  // namespace SceneryGenerator::LevelGenerator
 
 #endif

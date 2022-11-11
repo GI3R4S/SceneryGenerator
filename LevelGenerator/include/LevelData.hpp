@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <vector>
 
-namespace SceneryGenerator {
+namespace SceneryGenerator::LevelGenerator {
 
 //! Type of scenery.
 enum class SceneryType {
@@ -58,6 +58,6 @@ struct LevelData {
   // List of object that is available in scope of this level.
   std::vector<Object> objects;
 };
-}  // namespace SceneryGenerator
+}  // namespace SceneryGenerator::LevelGenerator
 
 #endif

@@ -5,7 +5,7 @@
 
 #include "BasicLevelGeneratorImpl.hpp"
 
-namespace SceneryGenerator {
+namespace SceneryGenerator::LevelGenerator {
 
 //! Constructor for the BasicLevelGenerator
 BasicLevelGenerator::BasicLevelGenerator(Configuration configuration)
@@ -18,4 +18,4 @@ LevelData BasicLevelGenerator::GenerateLevel() {
   return impl_->GenerateLevel();
 }
 
-}  // namespace SceneryGenerator
+}  // namespace SceneryGenerator::LevelGenerator

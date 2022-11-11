@@ -7,7 +7,7 @@
 
 #include "LevelGenerator.hpp"
 
-namespace SceneryGenerator {
+namespace SceneryGenerator::LevelGenerator {
 
 //! Basic implementation of level generator.
 class BasicLevelGenerator : public LevelGenerator {
@@ -39,6 +39,6 @@ class BasicLevelGenerator : public LevelGenerator {
   std::unique_ptr<Impl> impl_;
 };
 
-}  // namespace SceneryGenerator
+}  // namespace SceneryGenerator::LevelGenerator
 
 #endif
