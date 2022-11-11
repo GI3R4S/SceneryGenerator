@@ -14,7 +14,7 @@ concept IsNumeric = std::integral<T> || std::floating_point<T>;
 
 template <typename tNumberType>
   requires IsNumeric<tNumberType>
-struct RandomNumberGenerator {
+class RandomNumberGenerator {
  public:
   RandomNumberGenerator(std::pair<tNumberType, tNumberType> range)
       : min_(std::min(range.first, range.second)),
@@ -35,9 +35,10 @@ struct RandomNumberGenerator {
   }
 
  private:
-  typedef typename std::conditional<
-      std::is_integral<tNumberType>::value, std::uniform_int_distribution<>,
-      std::uniform_real_distribution<tNumberType>>::type tDistributionType;
+  using tDistributionType = typename std::conditional<
+      std::is_integral<tNumberType>::value,
+      std::uniform_int_distribution<tNumberType>,
+      std::uniform_real_distribution<tNumberType>>::type;
 
   tNumberType min_;
   tNumberType max_;
