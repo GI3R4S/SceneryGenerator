@@ -34,6 +34,10 @@ class RandomNumberGenerator {
     return numbers;
   }
 
+  tNumberType GetMinimum() const { return min_; }
+
+  tNumberType GetMaximum() const { return max_; }
+
  private:
   using tDistributionType = typename std::conditional<
       std::is_integral<tNumberType>::value,
