@@ -9,6 +9,8 @@
 
 namespace SceneryGenerator::LevelGenerator {
 
+class BasicLevelGeneratorImpl;
+
 //! Basic implementation of level generator.
 class BasicLevelGenerator : public LevelGenerator {
  public:
@@ -35,8 +37,7 @@ class BasicLevelGenerator : public LevelGenerator {
   virtual LevelData GenerateLevel() override;
 
  private:
-  class Impl;
-  std::unique_ptr<Impl> impl_;
+  std::unique_ptr<BasicLevelGeneratorImpl> impl_;
 };
 
 }  // namespace SceneryGenerator::LevelGenerator

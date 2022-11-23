@@ -16,6 +16,7 @@ set(IMPLEMENTATION_HEADERS
 set(IMPLEMENTATION_SOURCES
     src/BasicLevelGenerator.cpp
     src/BasicLevelGeneratorImpl.cpp
+    src/LevelData.cpp
 )
 
 add_library(${PROJECT_NAME} STATIC
@@ -27,4 +28,9 @@ add_library(${PROJECT_NAME} STATIC
 target_include_directories(${PROJECT_NAME}
     PUBLIC
     include
+    PRIVATE
+    src
 )
+
+target_link_libraries(${PROJECT_NAME} PUBLIC SceneryGenerator.Utils)
+add_subdirectory(test)

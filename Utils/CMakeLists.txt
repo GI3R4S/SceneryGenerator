@@ -4,6 +4,7 @@ project(SceneryGenerator.Utils CXX C)
 set(CMAKE_CXX_STANDARD 20)
 
 set(PUBLIC_HEADERS
+    include/GeometryUtils.hpp
     include/RandomNumberGenerator.hpp
 )
 
@@ -11,6 +12,7 @@ set(IMPLEMENTATION_HEADERS
 )
 
 set(IMPLEMENTATION_SOURCES
+    src/GeometryUtils.cpp
     src/RandomNumberGenerator.cpp
 )
 

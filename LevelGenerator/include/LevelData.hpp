@@ -2,6 +2,7 @@
 #define SCENERY_GENERATOR_LEVEL_GENERATOR_LEVEL_DATA_HPP
 
 #include <cstdint>
+#include <iostream>
 #include <vector>
 
 namespace SceneryGenerator::LevelGenerator {
@@ -31,13 +32,13 @@ enum class ObjectType {
 //! Representation of vertex.
 struct Vertex {
   //! Position of vertex on x axis.
-  std::int32_t x;
+  int64_t x;
 
   //! Position of vertex on y axis.
-  std::int32_t y;
+  int64_t y;
 
   //! Position of vertex on z axis.
-  std::int32_t z;
+  int64_t z;
 };
 
 //! Representation of level's object
@@ -47,17 +48,28 @@ struct Object {
 
   //! List of vertexes forming object.
   std::vector<Vertex> vertexes;
+
+  //! Extracts values of vertexex in `X` dimension.
+  std::vector<int64_t> GetXDimensionValues() const;
+
+  //! Extracts values of vertexex in `Y` dimension.
+  std::vector<int64_t> GetYDimensionValues() const;
+
+  //! Extracts values of vertexex in `Z` dimension.
+  std::vector<int64_t> GetZDimensionValues() const;
 };
 
 //! Structure holding data relevant for generated level.
 struct LevelData {
-  //! Default value for axis y. Generated structures
-  //! will have base at this y axis value.
-  std::int32_t default_y_value;
-
   // List of object that is available in scope of this level.
   std::vector<Object> objects;
 };
+
+std::ostream& operator<<(std::ostream& stream, const ObjectType& object_type);
+std::ostream& operator<<(std::ostream& stream, const Vertex& vertex);
+std::ostream& operator<<(std::ostream& stream, const Object& object);
+std::ostream& operator<<(std::ostream& stream, const LevelData& level_data);
+
 }  // namespace SceneryGenerator::LevelGenerator
 
 #endif

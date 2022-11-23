@@ -1,27 +1,17 @@
 #include "BasicLevelGeneratorImpl.hpp"
 
 #include <algorithm>
+#include <cmath>
 #include <map>
 #include <memory>
 #include <random>
 #include <set>
 
+#include "RandomNumberGenerator.hpp"
+
 namespace SceneryGenerator::LevelGenerator {
 
 namespace {
-// const std::map<SceneryType, std::set<ObjectType>>
-//     kObjectTypesToSceneryTypeMapping{
-//         {SceneryType::kCityCenter,
-//          {ObjectType::kBuilding, ObjectType::kRoad, ObjectType::kPavement}},
-//         {SceneryType::kCityOutskirts,
-//          {ObjectType::kBuilding, ObjectType::kRoad, ObjectType::kPavement,
-//           ObjectType::kMeadow}},
-//         {SceneryType::kCountryside,
-//          {ObjectType::kBuilding, ObjectType::kRoad, ObjectType::kPath,
-//           ObjectType::kRiver, ObjectType::kField, ObjectType::kMeadow}},
-//         {SceneryType::kIndustialArea,
-//          {ObjectType::kBuilding, ObjectType::kRoad, ObjectType::kPavement}}};
-
 const std::map<SceneryType, std::pair<float, float>> kRoadCoverageMap{
     {SceneryType::kCityCenter, {0.1f, 0.2f}},
     {SceneryType::kCityOutskirts, {0.05f, 0.15f}},
@@ -31,10 +21,11 @@ const std::map<SceneryType, std::pair<float, float>> kRoadCoverageMap{
 
 }  // namespace
 
-BasicLevelGenerator::Impl::Impl(Configuration configuration)
+BasicLevelGeneratorImpl::BasicLevelGeneratorImpl(
+    BasicLevelGenerator::Configuration configuration)
     : configuration_(std::move(configuration)) {}
 
-LevelData BasicLevelGenerator::Impl::GenerateLevel() {
+LevelData BasicLevelGeneratorImpl::GenerateLevel() {
   LevelData level_data;
 
   AddTerrain(level_data);
@@ -59,7 +50,7 @@ LevelData BasicLevelGenerator::Impl::GenerateLevel() {
   return {};
 }
 
-void BasicLevelGenerator::Impl::AddTerrain(LevelData& level_data) const {
+void BasicLevelGeneratorImpl::AddTerrain(LevelData& level_data) const {
   bool is_terrain_initialized =
       std::find_if(level_data.objects.cbegin(), level_data.objects.cend(),
                    [](const Object& object) {
@@ -69,34 +60,56 @@ void BasicLevelGenerator::Impl::AddTerrain(LevelData& level_data) const {
   if (is_terrain_initialized) {
     return;
   }
+  const auto size_of_map_in_square_centimeters =
+      configuration_.size_of_map * 10000;
+
+  double root = sqrt(size_of_map_in_square_centimeters);
+
+  Utils::RandomNumberGenerator<double> rng({0.2 * root, 0.8 * root});
+  auto first_side = rng.GetNumber();
+  auto second_side = size_of_map_in_square_centimeters / first_side;
+
+  first_side = round(first_side);
+  second_side = round(second_side);
+
+  Object object;
+  object.object_type = ObjectType::kTerrain;
+  object.vertexes = {
+      {0, 0, 0},
+      {static_cast<int64_t>(first_side), 0, 0},
+      {static_cast<int64_t>(first_side), 0, static_cast<int64_t>(second_side)},
+      {0, 0, static_cast<int64_t>(second_side)},
+  };
+
+  level_data.objects.push_back(object);
 }
 
-LevelData BasicLevelGenerator::Impl::GenerateCityCenter(
+LevelData BasicLevelGeneratorImpl::GenerateCityCenter(
     LevelData& level_data) const {
   return level_data;
 }
 
-LevelData BasicLevelGenerator::Impl::GenerateCityOutskirts(
+LevelData BasicLevelGeneratorImpl::GenerateCityOutskirts(
     LevelData& level_data) const {
   return level_data;
 }
-LevelData BasicLevelGenerator::Impl::GenerateVillage(
-    LevelData& level_data) const {
-  return level_data;
-}
-
-LevelData BasicLevelGenerator::Impl::GenerateSettlement(
+LevelData BasicLevelGeneratorImpl::GenerateVillage(
     LevelData& level_data) const {
   return level_data;
 }
 
-LevelData BasicLevelGenerator::Impl::GenerateIndustialArea(
+LevelData BasicLevelGeneratorImpl::GenerateSettlement(
     LevelData& level_data) const {
   return level_data;
 }
 
-void BasicLevelGenerator::Impl::AddRoadNetwork(LevelData& level_data,
-                                               SceneryType scenery_type) const {
+LevelData BasicLevelGeneratorImpl::GenerateIndustialArea(
+    LevelData& level_data) const {
+  return level_data;
+}
+
+void BasicLevelGeneratorImpl::AddRoadNetwork(LevelData& level_data,
+                                             SceneryType scenery_type) const {
   //! If level data is empty, architecture of level will be decided with road
   //! distribution.
   if (level_data.objects.empty()) {

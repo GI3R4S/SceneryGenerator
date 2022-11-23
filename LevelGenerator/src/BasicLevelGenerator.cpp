@@ -9,7 +9,7 @@ namespace SceneryGenerator::LevelGenerator {
 
 //! Constructor for the BasicLevelGenerator
 BasicLevelGenerator::BasicLevelGenerator(Configuration configuration)
-    : impl_(std::make_unique<BasicLevelGenerator::Impl>(configuration)) {}
+    : impl_(std::make_unique<BasicLevelGeneratorImpl>(configuration)) {}
 
 BasicLevelGenerator::~BasicLevelGenerator() = default;
 

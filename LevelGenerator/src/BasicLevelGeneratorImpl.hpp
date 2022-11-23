@@ -2,15 +2,13 @@
 
 namespace SceneryGenerator::LevelGenerator {
 
-class BasicLevelGenerator::Impl {
+class BasicLevelGeneratorImpl {
  public:
-  Impl(Configuration Configuration);
+  BasicLevelGeneratorImpl(BasicLevelGenerator::Configuration configuration);
 
-  ~Impl() = default;
+  ~BasicLevelGeneratorImpl() = default;
 
   LevelData GenerateLevel();
-
- protected:
   LevelData GenerateCityCenter(LevelData& level_data) const;
   LevelData GenerateCityOutskirts(LevelData& level_data) const;
   LevelData GenerateVillage(LevelData& level_data) const;
@@ -31,8 +29,7 @@ class BasicLevelGenerator::Impl {
   //! given level. Can be used with empty or partially filled level data.
   void AddRoadNetwork(LevelData& level_data, SceneryType scenery_type) const;
 
- private:
-  Configuration configuration_;
+  BasicLevelGenerator::Configuration configuration_;
 };
 
 };  // namespace SceneryGenerator::LevelGenerator
