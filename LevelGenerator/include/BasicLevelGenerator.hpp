@@ -20,7 +20,7 @@ class BasicLevelGenerator : public LevelGenerator {
   //! same 'y' value.
   struct Configuration {
     //! Size of map expressed in square meters.
-    //! Recommended minimal size of map is 10 000 square meters.
+    //! Recommended minimal size of map is 1000 square meters.
     double size_of_map;
 
     //! Type of scenery to be generated.

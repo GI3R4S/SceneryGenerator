@@ -1,6 +1,7 @@
 #include "LevelData.hpp"
 
 #include <algorithm>
+#include <cmath>
 #include <cstdint>
 #include <iostream>
 #include <vector>
@@ -35,6 +36,14 @@ std::vector<int64_t> Object::GetZDimensionValues() const {
       [&z_values](const Vertex& vertex) { z_values.push_back(vertex.z); });
 
   return std::move(z_values);
+}
+
+double CartesianDistance(const Vertex& first_vertex,
+                         const Vertex& second_vertex) {
+  return std::sqrt(std::pow(second_vertex.x - first_vertex.x, 2) +
+                   std::pow(second_vertex.y - first_vertex.y, 2) +
+                   std::pow(second_vertex.z - first_vertex.z, 2)
+  );
 }
 
 std::ostream& operator<<(std::ostream& stream, const ObjectType& object_type) {

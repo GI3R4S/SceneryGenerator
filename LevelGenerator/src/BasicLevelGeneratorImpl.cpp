@@ -1,25 +1,17 @@
 #include "BasicLevelGeneratorImpl.hpp"
 
 #include <algorithm>
+#include <cassert>
 #include <cmath>
 #include <map>
 #include <memory>
 #include <random>
 #include <set>
 
+#include "GeometryUtils.hpp"
 #include "RandomNumberGenerator.hpp"
-
+#include "RoadNetworkBuilder.hpp"
 namespace SceneryGenerator::LevelGenerator {
-
-namespace {
-const std::map<SceneryType, std::pair<float, float>> kRoadCoverageMap{
-    {SceneryType::kCityCenter, {0.1f, 0.2f}},
-    {SceneryType::kCityOutskirts, {0.05f, 0.15f}},
-    {SceneryType::kVillage, {0.01f, 0.05f}},
-    {SceneryType::kSettlement, {0.05f, 0.15f}},
-    {SceneryType::kIndustialArea, {0.1f, 0.2f}}};
-
-}  // namespace
 
 BasicLevelGeneratorImpl::BasicLevelGeneratorImpl(
     BasicLevelGenerator::Configuration configuration)
@@ -29,6 +21,7 @@ LevelData BasicLevelGeneratorImpl::GenerateLevel() {
   LevelData level_data;
 
   AddTerrain(level_data);
+  AddRoadNetwork(level_data);
 
   switch (configuration_.scenery_type) {
     case SceneryType::kCityCenter: {
@@ -84,6 +77,40 @@ void BasicLevelGeneratorImpl::AddTerrain(LevelData& level_data) const {
   level_data.objects.push_back(object);
 }
 
+void BasicLevelGeneratorImpl::AddRoadNetwork(LevelData& level_data) const {
+  auto terrain_object_it =
+      std::find_if(level_data.objects.cbegin(), level_data.objects.cend(),
+                   [](const Object& object) {
+                     return object.object_type == ObjectType::kTerrain;
+                   });
+
+  if (terrain_object_it == level_data.objects.cend()) {
+    return;
+  }
+
+  RoadNetworkBuilder road_network_builder(
+      level_data, configuration_.scenery_type);
+  road_network_builder.BuildRoadNetwork();
+
+  switch (configuration_.scenery_type) {
+    case SceneryType::kCityCenter: {
+      break;
+    }
+    case SceneryType::kCityOutskirts: {
+      break;
+    }
+    case SceneryType::kIndustialArea: {
+      break;
+    }
+    case SceneryType::kSettlement: {
+      break;
+    }
+    case SceneryType::kVillage: {
+      break;
+    }
+  }
+}
+
 LevelData BasicLevelGeneratorImpl::GenerateCityCenter(
     LevelData& level_data) const {
   return level_data;
@@ -108,12 +135,30 @@ LevelData BasicLevelGeneratorImpl::GenerateIndustialArea(
   return level_data;
 }
 
-void BasicLevelGeneratorImpl::AddRoadNetwork(LevelData& level_data,
-                                             SceneryType scenery_type) const {
-  //! If level data is empty, architecture of level will be decided with road
-  //! distribution.
-  if (level_data.objects.empty()) {
+//! Checks terrain coverage against chosen object type.
+double CheckAreaCoverage(LevelData& level_data, ObjectType object_type) {
+  auto terrain_object_it =
+      std::find_if(level_data.objects.cbegin(), level_data.objects.cend(),
+                   [](const Object& object) {
+                     return object.object_type == ObjectType::kTerrain;
+                   });
+
+  assert(terrain_object_it != level_data.objects.cend());
+
+  const auto terrain_size =
+      Utils::Compute2dPolygonSize(terrain_object_it->GetXDimensionValues(),
+                                  terrain_object_it->GetZDimensionValues());
+
+  double total_surface = 0;
+  // TODO: there's need to compute correctly intersected areas
+  for (const auto& object : level_data.objects) {
+    if (object.object_type == object_type) {
+      total_surface += Utils::Compute2dPolygonSize(
+          object.GetXDimensionValues(), object.GetZDimensionValues());
+    }
   }
+
+  return (total_surface / terrain_size) * 100;
 }
 
 }  // namespace SceneryGenerator::LevelGenerator

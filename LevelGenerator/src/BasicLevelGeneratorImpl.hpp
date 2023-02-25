@@ -1,3 +1,6 @@
+#ifndef SCENERY_GENERATOR_LEVEL_GENERATOR_BASICLEVELGENERATORIMPL_HPP_HPP
+#define SCENERY_GENERATOR_LEVEL_GENERATOR_BASICLEVELGENERATORIMPL_HPP_HPP
+
 #include "BasicLevelGenerator.hpp"
 
 namespace SceneryGenerator::LevelGenerator {
@@ -27,9 +30,14 @@ class BasicLevelGeneratorImpl {
   //!
   //! Structure of roads is determined depending of scenery type chosen for
   //! given level. Can be used with empty or partially filled level data.
-  void AddRoadNetwork(LevelData& level_data, SceneryType scenery_type) const;
+  void AddRoadNetwork(LevelData& level_data) const;
 
   BasicLevelGenerator::Configuration configuration_;
 };
 
+//! Checks terrain coverage against chosen object type.
+double CheckAreaCoverage(LevelData& level_data, ObjectType object_type);
+
 };  // namespace SceneryGenerator::LevelGenerator
+
+#endif  // SCENERY_GENERATOR_LEVEL_GENERATOR_BASICLEVELGENERATORIMPL_HPP_HPP

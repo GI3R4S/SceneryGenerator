@@ -11,12 +11,14 @@ set(PUBLIC_HEADERS
 
 set(IMPLEMENTATION_HEADERS
     src/BasicLevelGeneratorImpl.hpp
+    src/RoadNetworkBuilder.hpp
 )
 
 set(IMPLEMENTATION_SOURCES
     src/BasicLevelGenerator.cpp
     src/BasicLevelGeneratorImpl.cpp
     src/LevelData.cpp
+    src/RoadNetworkBuilder.cpp
 )
 
 add_library(${PROJECT_NAME} STATIC

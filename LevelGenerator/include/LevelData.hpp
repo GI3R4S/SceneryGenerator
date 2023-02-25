@@ -65,6 +65,8 @@ struct LevelData {
   std::vector<Object> objects;
 };
 
+double CartesianDistance(const Vertex& first_vertex, const Vertex& second_vertex);
+
 std::ostream& operator<<(std::ostream& stream, const ObjectType& object_type);
 std::ostream& operator<<(std::ostream& stream, const Vertex& vertex);
 std::ostream& operator<<(std::ostream& stream, const Object& object);
